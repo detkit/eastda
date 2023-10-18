@@ -6,7 +6,9 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node server/index.js",
-		"server": "nodemon server/index.js"
+		"server": "nodemon server/index.js",
+		"dev": "npm run dev --prefix client",
+		"build": "concurrently \"pnpm run server\" \"pnpm run dev\""
 	},
 	"keywords": [],
 	"author": "",
@@ -17,6 +19,7 @@
 		"mongoose": "^7.6.3"
 	},
 	"devDependencies": {
+		"concurrently": "^8.2.1",
 		"nodemon": "^3.0.1"
 	}
 }
