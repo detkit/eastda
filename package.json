@@ -1,0 +1,20 @@
+{
+	"name": "eastda",
+	"version": "1.0.0",
+	"description": "",
+	"type": "module",
+	"main": "index.js",
+	"scripts": {
+		"start": "node server/index.js",
+		"server": "nodemon server/index.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.18.2"
+	},
+	"devDependencies": {
+		"nodemon": "^3.0.1"
+	}
+}
