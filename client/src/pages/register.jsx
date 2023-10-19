@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Register() {
 	const [formData, setFormData] = useState({});
 	const [error, setError] = useState(null);
 	const [isLoading, setIsLoading] = useState(false);
+	const navigate = useNavigate();
 
 	const handleChange = (e) => {
 		setFormData({
@@ -25,12 +26,13 @@ export default function Register() {
 			const data = await res.json();
 
 			if (data.success === false) {
-				setError(data.message);
 				setIsLoading(false);
+				setError(data.message);
 				return;
 			}
 			setIsLoading(false);
 			setError(null);
+			navigate('/login');
 		} catch (error) {
 			setIsLoading(false);
 			setError(error.message);
