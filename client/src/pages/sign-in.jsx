@@ -1,11 +1,17 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import {
+	logInFailure,
+	logInStart,
+	logInSuccess,
+} from '../redux/user/userSlice';
 
 export default function SignIn() {
 	const [formData, setFormData] = useState({});
-	const [error, setError] = useState(null);
-	const [isLoading, setIsLoading] = useState(false);
+	const { loading, error } = useSelector((state) => state.user);
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const handleChange = (e) => {
 		setFormData({
@@ -17,25 +23,22 @@ export default function SignIn() {
 	const handlerSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			setIsLoading(true);
+			dispatch(logInStart());
 			const res = await fetch('/api/auth/login', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify(formData),
 			});
-			const data = await res.json();
 
+			const data = await res.json();
 			if (data.success === false) {
-				setError(data.message);
-				setIsLoading(false);
+				dispatch(logInFailure(data.message));
 				return;
 			}
-			setIsLoading(false);
-			setError(null);
+			dispatch(logInSuccess(data));
 			navigate('/');
 		} catch (error) {
-			setIsLoading(false);
-			setError(error.message);
+			dispatch(logInFailure(error.message));
 		}
 	};
 
@@ -58,10 +61,10 @@ export default function SignIn() {
 					onChange={handleChange}
 				/>
 				<button
-					disabled={isLoading}
+					disabled={loading}
 					className='p-3 text-white uppercase bg-blue-500 rounded-lg hover:opacity-95 disabled:opacity-75'
 				>
-					{isLoading ? 'Loading...' : 'Register'}
+					{loading ? 'Loading...' : 'Login'}
 				</button>
 			</form>
 			{error && <p className='mt-5 text-red-500'>{error}</p>}
