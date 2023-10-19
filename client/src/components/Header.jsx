@@ -19,13 +19,22 @@ const Header = () => {
 				</form>
 
 				<ul className='flex gap-4'>
-					<Link className='hidden cursor-pointer sm:inline-block text-slate-700 hover:underline'>
+					<Link
+						to='/'
+						className='hidden cursor-pointer sm:inline-block text-slate-700 hover:underline'
+					>
 						Home
 					</Link>
-					<Link className='hidden cursor-pointer sm:inline-block text-slate-700 hover:underline'>
+					<Link
+						to='/about'
+						className='hidden cursor-pointer sm:inline-block text-slate-700 hover:underline'
+					>
 						About
 					</Link>
-					<Link className='cursor-pointer text-slate-700 hover:underline'>
+					<Link
+						to='/login'
+						className='cursor-pointer text-slate-700 hover:underline'
+					>
 						Login
 					</Link>
 				</ul>
