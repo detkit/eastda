@@ -6,6 +6,7 @@ import {
 } from 'firebase/storage';
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { app } from '../firebase';
 import {
 	deleteUserFailure,
@@ -28,12 +29,6 @@ export default function Profile() {
 	const [formData, setFormData] = useState({});
 	const [updateSuccess, setUpdateSuccess] = useState(false);
 	const dispatch = useDispatch();
-
-	// firebase to upload image
-	// allow read;
-	// allow write: if
-	// request.resource.size < 2 * 1024 * 1024 &&
-	// request.resource.contentType.matches('image/.*')
 
 	useEffect(() => {
 		if (file) {
@@ -131,7 +126,7 @@ export default function Profile() {
 	};
 
 	return (
-		<div className='p-3 max-w-lg mx-auto'>
+		<div className='max-w-lg p-3 mx-auto'>
 			<h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
 			<form onSubmit={handleSubmit} className='flex flex-col gap-4'>
 				<input
@@ -145,9 +140,9 @@ export default function Profile() {
 					onClick={() => imgRef.current.click()}
 					src={formData?.avatar || currentUser.avatar}
 					alt='avatar'
-					className='rounded-full h-24 self-center mt-2 w-24 object-cover cursor-pointer'
+					className='self-center object-cover w-24 h-24 mt-2 rounded-full cursor-pointer'
 				/>
-				<p className='text-md self-center'>
+				<p className='self-center text-md'>
 					{fileUploadError ? (
 						<span className='text-red-700'>
 							Error Image Upload (image must be less than 2 mb)
@@ -167,7 +162,7 @@ export default function Profile() {
 					placeholder='username'
 					id='username'
 					defaultValue={currentUser.username}
-					className='border p-3 rounded-lg'
+					className='p-3 border rounded-lg'
 					onChange={handleChange}
 				/>
 				<input
@@ -175,20 +170,26 @@ export default function Profile() {
 					placeholder='email'
 					id='email'
 					defaultValue={currentUser.email}
-					className='border p-3 rounded-lg'
+					className='p-3 border rounded-lg'
 					onChange={handleChange}
 				/>
 				<input
 					type='text'
 					placeholder='password'
-					className='border p-3 rounded-lg'
+					className='p-3 border rounded-lg'
 				/>
 				<button
 					disabled={loading}
-					className='bg-sky-600 text-white rounded-lg p-3 uppercase hover:opacity-90 disabled:opacity-80'
+					className='p-3 text-white uppercase rounded-lg bg-sky-600 hover:opacity-90 disabled:opacity-80'
 				>
 					{loading ? 'Loading...' : 'Updated'}
 				</button>
+				<Link
+					to='/create-listing'
+					className='p-3 text-center text-white uppercase bg-green-700 rounded-lg hover:opacity-95'
+				>
+					Create Listing
+				</Link>
 			</form>
 			<div className='flex justify-between mt-5'>
 				<span
@@ -205,8 +206,8 @@ export default function Profile() {
 				</span>
 			</div>
 
-			<p className='text-red-700 mt-5'>{error ? error : ''}</p>
-			<p className='text-green-700 mt-5'>
+			<p className='mt-5 text-red-700'>{error ? error : ''}</p>
+			<p className='mt-5 text-green-700'>
 				{updateSuccess ? 'User is updated successfully!' : ''}
 			</p>
 		</div>
