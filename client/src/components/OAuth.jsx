@@ -4,11 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { app } from '../firebase';
 import { logInSuccess } from '../redux/user/userSlice';
 
-const OAuth = () => {
+export default function OAuth() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-
-	const handleLogGoogle = async () => {
+	const handleGoogleClick = async () => {
 		try {
 			const provider = new GoogleAuthProvider();
 			const auth = getAuth(app);
@@ -30,19 +29,16 @@ const OAuth = () => {
 			dispatch(logInSuccess(data));
 			navigate('/');
 		} catch (error) {
-			console.log('could not login with google');
+			console.log('could not sign in with google', error);
 		}
 	};
-
 	return (
 		<button
-			onClick={handleLogGoogle}
+			onClick={handleGoogleClick}
 			type='button'
-			className='p-3 text-white uppercase bg-red-600 rounded-lg hover:opacity-95'
+			className='p-3 text-white uppercase bg-red-700 rounded-lg hover:opacity-95'
 		>
-			continue with google
+			Continue with google
 		</button>
 	);
-};
-
-export default OAuth;
+}
