@@ -39,6 +39,7 @@ const Header = () => {
 						type='text'
 						placeholder='Search..'
 						className='w-24 bg-transparent focus:outline-none sm:w-64'
+						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
 					/>
 					<button>
